@@ -2,6 +2,7 @@ package com.example.pokemonsjc.presentation.pokemonsScreen
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +24,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.pokemonsjc.R
+import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeletAll
 import com.example.pokemonsjc.presentation.commonWidgets.DeletePokemonsFAB
 import com.example.pokemonsjc.presentation.commonWidgets.EmptyScreen
 import com.example.pokemonsjc.presentation.commonWidgets.ErrorScreen
@@ -53,6 +57,7 @@ fun PokemonsScreen(
     val pullRefreshState = rememberPullRefreshState(refreshing = pokemonsUiState.isLoading,
         onRefresh = { viewModel.createEvent(PokemonsEvent.UpdatePokemons) })
 
+    val context = LocalContext.current
     val listState = rememberLazyListState()
     val showButton by remember {
         derivedStateOf {
@@ -60,6 +65,9 @@ fun PokemonsScreen(
         }
     }
     val coroutineScope = rememberCoroutineScope()
+    val openDialog = remember {
+        mutableStateOf(false)
+    }
 
 
     Scaffold(
@@ -78,13 +86,10 @@ fun PokemonsScreen(
                 ScrollToTopButton(
                     showButton = showButton, coroutineScope = coroutineScope, listState = listState
                 )
-
                 Spacer(modifier = Modifier.size(8.dp))
-
                 DeletePokemonsFAB {
-                    viewModel.createEvent(PokemonsEvent.DeletePokemons)
+                    openDialog.value = true
                 }
-
             }
         },
     ) { innerPadding ->
@@ -115,6 +120,7 @@ fun PokemonsScreen(
                 modifier = Modifier.align(Alignment.TopCenter)
             )
 
+            // error and empty Screens
             Box(modifier = Modifier.align(Alignment.Center)) {
                 if (pokemonsUiState.isScreenIsEmpty) {
                     EmptyScreen(
@@ -132,6 +138,18 @@ fun PokemonsScreen(
                         viewModel.createEvent(PokemonsEvent.ContinueOffline)
                     }
                 }
+            }
+
+            //AlertDialog
+            if (openDialog.value) {
+                AlertDialogToDeletAll(onDismissRequest = { openDialog.value = false },
+                    onConfirmation = {
+                        viewModel.createEvent(PokemonsEvent.DeletePokemons)
+                        openDialog.value = false
+                        Toast.makeText(
+                            context, "Pokemons were deleted", Toast.LENGTH_SHORT
+                        ).show()
+                    })
             }
         }
     }
