@@ -24,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -65,10 +64,6 @@ fun PokemonsScreen(
         }
     }
     val coroutineScope = rememberCoroutineScope()
-    val openDialog = remember {
-        mutableStateOf(false)
-    }
-
 
     Scaffold(
         topBar = {
@@ -88,7 +83,7 @@ fun PokemonsScreen(
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 DeletePokemonsFAB {
-                    openDialog.value = true
+                    viewModel.createEvent(PokemonsEvent.OpenAlertDialog)
                 }
             }
         },
@@ -106,7 +101,7 @@ fun PokemonsScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 state = listState
             ) {
-                items(pokemonsUiState.pokemons) {
+                items(pokemonsUiState.pokemons, key = { pokemon -> pokemon.id }) {
                     PokemonsItem(pokemon = it) {
                         navController.navigate(route = Screens.PokemonDetail.passId(it.id))
                         Log.i("after navigate", "navigate id = ${it.id}")
@@ -141,11 +136,11 @@ fun PokemonsScreen(
             }
 
             //AlertDialog
-            if (openDialog.value) {
-                AlertDialogToDeletAll(onDismissRequest = { openDialog.value = false },
+            if (pokemonsUiState.isDialogOpen) {
+                AlertDialogToDeletAll(onDismissRequest = { viewModel.createEvent(PokemonsEvent.HideAlertDialog) },
                     onConfirmation = {
                         viewModel.createEvent(PokemonsEvent.DeletePokemons)
-                        openDialog.value = false
+                        viewModel.createEvent(PokemonsEvent.HideAlertDialog)
                         Toast.makeText(
                             context, "Pokemons were deleted", Toast.LENGTH_SHORT
                         ).show()

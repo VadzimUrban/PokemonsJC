@@ -104,6 +104,18 @@ class PokemonsViewModel @Inject constructor(
                     }
                 }
             }
+
+            PokemonsEvent.OpenAlertDialog -> {
+                _uiState.update {
+                    it.copy(isDialogOpen = true)
+                }
+            }
+
+            PokemonsEvent.HideAlertDialog -> {
+                _uiState.update {
+                    it.copy(isDialogOpen = false)
+                }
+            }
         }
     }
 }

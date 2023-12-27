@@ -8,4 +8,5 @@ data class PokemonsUiState(
     val isScreenIsEmpty: Boolean = true,
     val isLoading: Boolean = false,
     val searchResultPokemons: List<PokemonPresentation> = emptyList(),
+    val isDialogOpen: Boolean = false
 )
