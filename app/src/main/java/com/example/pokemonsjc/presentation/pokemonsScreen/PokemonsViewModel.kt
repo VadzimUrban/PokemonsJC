@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pokemonsjc.domain.interactors.PokemonsInteractor
 import com.example.pokemonsjc.presentation.mappers.toPresentationStream
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -22,6 +22,8 @@ class PokemonsViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<PokemonsUiState> = MutableStateFlow(PokemonsUiState())
     val uiState = _uiState.asStateFlow()
+
+    private var downloading: Job? = null
 
     init {
         viewModelScope.launch {
@@ -49,8 +51,8 @@ class PokemonsViewModel @Inject constructor(
     private fun onEvent(event: PokemonsEvent) = viewModelScope.launch {
         when (event) {
             PokemonsEvent.DeletePokemons -> {
+                stopDownloading()
                 pokemonsInteractor.clearCache()
-
                 _uiState.update {
                     it.copy(
                         pokemons = emptyList(),
@@ -58,8 +60,6 @@ class PokemonsViewModel @Inject constructor(
                         isScreenIsEmpty = true,
                     )
                 }
-                // dont work hz why
-                this.coroutineContext.cancelChildren()
             }
 
             is PokemonsEvent.SearchPokemon -> {
@@ -73,7 +73,7 @@ class PokemonsViewModel @Inject constructor(
                     }
             }
 
-            PokemonsEvent.UpdatePokemons -> {
+            PokemonsEvent.UpdatePokemons -> downloading = launch {
                 try {
                     pokemonsInteractor.updateCache()
                     _uiState.update {
@@ -117,5 +117,9 @@ class PokemonsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun stopDownloading() {
+        downloading?.cancel()
     }
 }
