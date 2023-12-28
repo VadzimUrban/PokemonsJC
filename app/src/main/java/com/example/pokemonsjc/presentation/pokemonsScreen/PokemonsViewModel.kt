@@ -116,6 +116,16 @@ class PokemonsViewModel @Inject constructor(
                     it.copy(isDialogOpen = false)
                 }
             }
+
+            PokemonsEvent.ReturnPokemons -> {
+                pokemonsInteractor.getPokemonsStream().toPresentationStream().collect {
+                    _uiState.update { pokemonsUiState ->
+                        pokemonsUiState.copy(
+                            pokemons = it
+                        )
+                    }
+                }
+            }
         }
     }
 
