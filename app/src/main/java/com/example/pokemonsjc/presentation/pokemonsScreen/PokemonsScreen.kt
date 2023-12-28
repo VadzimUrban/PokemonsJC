@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
@@ -53,7 +54,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.pokemonsjc.R
-import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeletAll
+import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeleteAll
 import com.example.pokemonsjc.presentation.commonWidgets.DeletePokemonsFAB
 import com.example.pokemonsjc.presentation.commonWidgets.EmptyScreen
 import com.example.pokemonsjc.presentation.commonWidgets.ErrorScreen
@@ -130,13 +131,14 @@ fun PokemonsScreen(
                                     isShowingSearchBar = true
                                     isShowingTitle = false
                                     isShowingSearchIcon = false
+                                    isShowingCloseSearching = true
                                 }, imageVector = Icons.Filled.Search, contentDescription = ""
                         )
                     }
                 },
                 navigationIcon = {
                     if (isShowingCloseSearching) {
-                        Icon(imageVector = Icons.Filled.Close,
+                        Icon(imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "",
                             modifier = Modifier
                                 .padding(10.dp)
@@ -152,8 +154,7 @@ fun PokemonsScreen(
                 SearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 10.dp)
-                        .height(250.dp),
+                        .padding(bottom = 10.dp),
                     query = text,
                     onQueryChange = {
                         text = it
@@ -190,17 +191,30 @@ fun PokemonsScreen(
                                         text = ""
                                     } else {
                                         active = false
+                                        isShowingSearchBar = false
+                                        isShowingTitle = true
+                                        isShowingSearchIcon = true
                                     }
                                 }, imageVector = Icons.Filled.Close, contentDescription = "Search"
                             )
                         }
                     },
                     shape = RoundedCornerShape(10.dp),
-                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-
+                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    tonalElevation = 20.dp
                 ) {
                     items.forEach {
-                        Row(modifier = Modifier.padding(14.dp)) {
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp)
+                            .clickable {
+                                viewModel.createEvent(PokemonsEvent.SearchPokemon(it))
+                                active = false
+                                isShowingSearchBar = false
+                                isShowingSearchIcon = true
+                                isShowingCloseSearching = true
+                                isShowingTitle = true
+                            }) {
                             Icon(
                                 modifier = Modifier.padding(end = 10.dp),
                                 imageVector = Icons.Filled.Refresh,
@@ -274,14 +288,16 @@ fun PokemonsScreen(
 
             //AlertDialog
             if (pokemonsUiState.isDialogOpen) {
-                AlertDialogToDeletAll(onDismissRequest = { viewModel.createEvent(PokemonsEvent.HideAlertDialog) },
+                AlertDialogToDeleteAll(
+                    onDismissRequest = { viewModel.createEvent(PokemonsEvent.HideAlertDialog) },
                     onConfirmation = {
                         viewModel.createEvent(PokemonsEvent.DeletePokemons)
                         viewModel.createEvent(PokemonsEvent.HideAlertDialog)
                         Toast.makeText(
                             context, "Pokemons were deleted", Toast.LENGTH_SHORT
                         ).show()
-                    })
+                    },
+                )
             }
         }
     }
