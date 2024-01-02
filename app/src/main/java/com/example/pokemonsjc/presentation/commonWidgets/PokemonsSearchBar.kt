@@ -18,31 +18,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pokemonsjc.presentation.pokemonsScreen.PokemonsEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokemonsSearchBar(
     query: String,
+    isSearchBarActive: Boolean,
+    lastQueries: MutableList<String>,
     onQueryChange: (query: String) -> Unit,
     onSearch: (query: String) -> Unit,
+    searchPokemon: (query: String) -> Unit,
+    onActiveChange: (isActive: Boolean) -> Unit,
+    closeSearch: () -> Unit,
 
-) {
-    SearchBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 10.dp),
+
+    ) {
+    SearchBar(modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 10.dp),
         query = query,
         onQueryChange = {
             onQueryChange(it)
         },
         onSearch = {
-            viewModel.createEvent(PokemonsEvent.OnSearch(it))
-            viewModel.createEvent(PokemonsEvent.SearchPokemon(pokemonsUiState.searchQuery))
+            onSearch(it)
+            searchPokemon(it)
         },
-        active = pokemonsUiState.isSearchBarActive,
+        active = isSearchBarActive,
         onActiveChange = {
-            viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
+            onActiveChange(it)
         },
         placeholder = {
             Text(text = "Search...")
@@ -51,10 +55,10 @@ fun PokemonsSearchBar(
             Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
         },
         trailingIcon = {
-            if (pokemonsUiState.isSearchBarActive) {
+            if (isSearchBarActive) {
                 Icon(
                     modifier = Modifier.clickable {
-                        viewModel.createEvent(PokemonsEvent.CloseSearch)
+                        closeSearch()
                     }, imageVector = Icons.Filled.Close, contentDescription = "Search"
                 )
             }
@@ -63,16 +67,12 @@ fun PokemonsSearchBar(
         colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         tonalElevation = 20.dp
     ) {
-        pokemonsUiState.lastQueries.forEach {
+        lastQueries.forEach {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(14.dp)
                 .clickable {
-                    viewModel.createEvent(
-                        PokemonsEvent.SearchPokemon(
-                            it
-                        )
-                    )
+                    searchPokemon(it)
                 }) {
                 Icon(
                     modifier = Modifier.padding(end = 10.dp),

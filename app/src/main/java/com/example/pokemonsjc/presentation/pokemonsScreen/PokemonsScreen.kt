@@ -7,23 +7,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -32,8 +27,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -53,6 +46,7 @@ import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeleteAll
 import com.example.pokemonsjc.presentation.commonWidgets.DeletePokemonsFAB
 import com.example.pokemonsjc.presentation.commonWidgets.EmptyScreen
 import com.example.pokemonsjc.presentation.commonWidgets.ErrorScreen
+import com.example.pokemonsjc.presentation.commonWidgets.PokemonsSearchBar
 import com.example.pokemonsjc.presentation.commonWidgets.ScrollToTopButton
 import com.example.pokemonsjc.presentation.navigation.Screens
 
@@ -126,63 +120,87 @@ fun PokemonsScreen(
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer,
             )
             if (pokemonsUiState.isShowingSearchBar) {
-                SearchBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 10.dp),
-                    query = pokemonsUiState.searchQuery,
-                    onQueryChange = {
-                        viewModel.createEvent(PokemonsEvent.OnQueryChange(it))
-                    },
-                    onSearch = {
-                        viewModel.createEvent(PokemonsEvent.OnSearch(it))
-                        viewModel.createEvent(PokemonsEvent.SearchPokemon(pokemonsUiState.searchQuery))
-                    },
-                    active = pokemonsUiState.isSearchBarActive,
-                    onActiveChange = {
-                        viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
-                    },
-                    placeholder = {
-                        Text(text = "Search...")
-                    },
-                    leadingIcon = {
-                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
-                    },
-                    trailingIcon = {
-                        if (pokemonsUiState.isSearchBarActive) {
-                            Icon(
-                                modifier = Modifier.clickable {
-                                    viewModel.createEvent(PokemonsEvent.CloseSearch)
-                                }, imageVector = Icons.Filled.Close, contentDescription = "Search"
-                            )
-                        }
-                    },
-                    shape = RoundedCornerShape(10.dp),
-                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                    tonalElevation = 20.dp
-                ) {
-                    pokemonsUiState.lastQueries.forEach {
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(14.dp)
-                            .clickable {
-                                viewModel.createEvent(
-                                    PokemonsEvent.SearchPokemon(
-                                        it
-                                    )
-                                )
-                            }) {
-                            Icon(
-                                modifier = Modifier.padding(end = 10.dp),
-                                imageVector = Icons.Filled.Refresh,
-                                contentDescription = "Refresh"
-                            )
-                            Text(
-                                text = it
-                            )
-                        }
-                    }
+                with(pokemonsUiState) {
+                    PokemonsSearchBar(
+                        query = searchQuery,
+                        isSearchBarActive = isSearchBarActive,
+                        lastQueries = lastQueries,
+                        onQueryChange = {
+                            viewModel.createEvent(PokemonsEvent.OnQueryChange(it))
+                        },
+                        onSearch = {
+                            viewModel.createEvent(PokemonsEvent.OnSearch(it))
+                        },
+                        searchPokemon = {
+                            viewModel.createEvent(PokemonsEvent.SearchPokemon(it))
+                        },
+                        onActiveChange = {
+                            viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
+                        },
+                        closeSearch = {
+                            viewModel.createEvent(PokemonsEvent.CloseSearch)
+                        },
+                    )
                 }
+
+
+//                SearchBar(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(bottom = 10.dp),
+//                    query = pokemonsUiState.searchQuery,
+//                    onQueryChange = {
+//                        viewModel.createEvent(PokemonsEvent.OnQueryChange(it))
+//                    },
+//                    onSearch = {
+//                        viewModel.createEvent(PokemonsEvent.OnSearch(it))
+//                        viewModel.createEvent(PokemonsEvent.SearchPokemon(it))
+//                    },
+//                    active = pokemonsUiState.isSearchBarActive,
+//                    onActiveChange = {
+//                        viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
+//                    },
+//                    placeholder = {
+//                        Text(text = "Search...")
+//                    },
+//                    leadingIcon = {
+//                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+//                    },
+//                    trailingIcon = {
+//                        if (pokemonsUiState.isSearchBarActive) {
+//                            Icon(
+//                                modifier = Modifier.clickable {
+//                                    viewModel.createEvent(PokemonsEvent.CloseSearch)
+//                                }, imageVector = Icons.Filled.Close, contentDescription = "Search"
+//                            )
+//                        }
+//                    },
+//                    shape = RoundedCornerShape(10.dp),
+//                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+//                    tonalElevation = 20.dp
+//                ) {
+//                    pokemonsUiState.lastQueries.forEach {
+//                        Row(modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(14.dp)
+//                            .clickable {
+//                                viewModel.createEvent(
+//                                    PokemonsEvent.SearchPokemon(
+//                                        it
+//                                    )
+//                                )
+//                            }) {
+//                            Icon(
+//                                modifier = Modifier.padding(end = 10.dp),
+//                                imageVector = Icons.Filled.Refresh,
+//                                contentDescription = "Refresh"
+//                            )
+//                            Text(
+//                                text = it
+//                            )
+//                        }
+//                    }
+//                }
             }
         },
         floatingActionButton = {
