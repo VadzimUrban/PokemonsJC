@@ -142,69 +142,13 @@ fun PokemonsScreen(
                         },
                     )
                 }
-
-
-//                SearchBar(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(bottom = 10.dp),
-//                    query = pokemonsUiState.searchQuery,
-//                    onQueryChange = {
-//                        viewModel.createEvent(PokemonsEvent.OnQueryChange(it))
-//                    },
-//                    onSearch = {
-//                        viewModel.createEvent(PokemonsEvent.OnSearch(it))
-//                        viewModel.createEvent(PokemonsEvent.SearchPokemon(it))
-//                    },
-//                    active = pokemonsUiState.isSearchBarActive,
-//                    onActiveChange = {
-//                        viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
-//                    },
-//                    placeholder = {
-//                        Text(text = "Search...")
-//                    },
-//                    leadingIcon = {
-//                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
-//                    },
-//                    trailingIcon = {
-//                        if (pokemonsUiState.isSearchBarActive) {
-//                            Icon(
-//                                modifier = Modifier.clickable {
-//                                    viewModel.createEvent(PokemonsEvent.CloseSearch)
-//                                }, imageVector = Icons.Filled.Close, contentDescription = "Search"
-//                            )
-//                        }
-//                    },
-//                    shape = RoundedCornerShape(10.dp),
-//                    colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-//                    tonalElevation = 20.dp
-//                ) {
-//                    pokemonsUiState.lastQueries.forEach {
-//                        Row(modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(14.dp)
-//                            .clickable {
-//                                viewModel.createEvent(
-//                                    PokemonsEvent.SearchPokemon(
-//                                        it
-//                                    )
-//                                )
-//                            }) {
-//                            Icon(
-//                                modifier = Modifier.padding(end = 10.dp),
-//                                imageVector = Icons.Filled.Refresh,
-//                                contentDescription = "Refresh"
-//                            )
-//                            Text(
-//                                text = it
-//                            )
-//                        }
-//                    }
-//                }
             }
         },
         floatingActionButton = {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 ScrollToTopButton(
                     showButton = showButton, coroutineScope = coroutineScope, listState = listState
                 )
