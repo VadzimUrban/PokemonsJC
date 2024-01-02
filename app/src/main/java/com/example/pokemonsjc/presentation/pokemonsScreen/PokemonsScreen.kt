@@ -38,7 +38,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -88,114 +87,60 @@ fun PokemonsScreen(
     }
     val coroutineScope = rememberCoroutineScope()
 
-//    var searchQuery by remember {
-//        mutableStateOf("")
-//    }
-//
-//    var isSearchBarActive by remember {
-//        mutableStateOf(false)
-//    }
-//
-    val lastQueries = remember {
-        mutableStateListOf("")
-    }
-//
-//    var isShowingSearchBar by remember {
-//        mutableStateOf(false)
-//    }
-//    var isShowingTitle by remember {
-//        mutableStateOf(true)
-//    }
-//    var isShowingSearchIcon by remember {
-//        mutableStateOf(true)
-//    }
-//
-//    var isShowingCloseSearching by remember {
-//        mutableStateOf(false)
-//    }
-
-
-    // remove all logics of boolean variables to viewModel and create search bar
 
     Scaffold(
         topBar = {
             TopAppBar(
                 modifier = Modifier.height(70.dp),
                 title = {
-                    if (pokemonsUiState.isShowingAppBarTitle
-//                        isShowingTitle
-                    ) {
+                    if (pokemonsUiState.isShowingAppBarTitle) {
                         Text(
                             text = "Pokemons", style = MaterialTheme.typography.titleLarge
                         )
                     }
                 },
                 actions = {
-                    if (pokemonsUiState.isShowingSearchIcon
-//                        isShowingSearchIcon
-                    ) {
+                    if (pokemonsUiState.isShowingSearchIcon) {
                         Icon(
                             modifier = Modifier
                                 .padding(16.dp)
                                 .clickable {
                                     viewModel.createEvent(PokemonsEvent.OpenSearch)
-//                                    isShowingSearchBar = true
-//                                    isShowingTitle = false
-//                                    isShowingSearchIcon = false
-//                                    isShowingCloseSearching = true
                                 }, imageVector = Icons.Filled.Search, contentDescription = ""
                         )
                     }
                 },
                 navigationIcon = {
-                    if (pokemonsUiState.isShowingCloseSearchingIcon
-//                        isShowingCloseSearching
-                    ) {
-                        Icon(imageVector = Icons.Filled.ArrowBack,
+                    if (pokemonsUiState.isShowingCloseSearchingIcon) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "",
                             modifier = Modifier
                                 .padding(10.dp)
                                 .clickable {
                                     viewModel.createEvent(PokemonsEvent.ReturnPokemons)
-//                                    isShowingCloseSearching = false
-                                })
+                                },
+                        )
                     }
                 },
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer,
             )
-            if (pokemonsUiState.isShowingSearchBar
-//                isShowingSearchBar
-            ) {
+            if (pokemonsUiState.isShowingSearchBar) {
                 SearchBar(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 10.dp),
-                    query = pokemonsUiState.searchQuery
-//                    searchQuery
-                    ,
+                    query = pokemonsUiState.searchQuery,
                     onQueryChange = {
                         viewModel.createEvent(PokemonsEvent.OnQueryChange(it))
-//                        searchQuery = it
                     },
                     onSearch = {
-//                        viewModel.createEvent(PokemonsEvent.OnSearch(it))
-                        if (lastQueries[0] == "") {
-                            lastQueries[0] = it
-                        } else {
-                            lastQueries.add(it)
-                        }
+                        viewModel.createEvent(PokemonsEvent.OnSearch(it))
                         viewModel.createEvent(PokemonsEvent.SearchPokemon(pokemonsUiState.searchQuery))
-//                        isSearchBarActive = false
-//                        searchQuery = ""
-//                        isShowingSearchBar = false
-//                        isShowingSearchIcon = true
-//                        isShowingTitle = true
-//                        isShowingCloseSearching = true
                     },
                     active = pokemonsUiState.isSearchBarActive,
                     onActiveChange = {
                         viewModel.createEvent(PokemonsEvent.OnActiveChange(it))
-//                        isSearchBarActive = it
                     },
                     placeholder = {
                         Text(text = "Search...")
@@ -207,15 +152,7 @@ fun PokemonsScreen(
                         if (pokemonsUiState.isSearchBarActive) {
                             Icon(
                                 modifier = Modifier.clickable {
-//                                    if (searchQuery.isNotEmpty()) {
-//                                        searchQuery = ""
-//                                    } else {
                                     viewModel.createEvent(PokemonsEvent.CloseSearch)
-//                                        isSearchBarActive = false
-//                                        isShowingSearchBar = false
-//                                        isShowingTitle = true
-//                                        isShowingSearchIcon = true
-//                                    }
                                 }, imageVector = Icons.Filled.Close, contentDescription = "Search"
                             )
                         }
@@ -224,7 +161,7 @@ fun PokemonsScreen(
                     colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                     tonalElevation = 20.dp
                 ) {
-                    lastQueries.forEach {
+                    pokemonsUiState.lastQueries.forEach {
                         Row(modifier = Modifier
                             .fillMaxWidth()
                             .padding(14.dp)
@@ -234,11 +171,6 @@ fun PokemonsScreen(
                                         it
                                     )
                                 )
-//                                isSearchBarActive = false
-//                                isShowingSearchBar = false
-//                                isShowingSearchIcon = true
-//                                isShowingCloseSearching = true
-//                                isShowingTitle = true
                             }) {
                             Icon(
                                 modifier = Modifier.padding(end = 10.dp),

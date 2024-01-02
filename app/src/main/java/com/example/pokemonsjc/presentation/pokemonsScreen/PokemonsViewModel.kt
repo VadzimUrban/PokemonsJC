@@ -1,7 +1,6 @@
 package com.example.pokemonsjc.presentation.pokemonsScreen
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemonsjc.domain.interactors.PokemonsInteractor
@@ -25,8 +24,6 @@ class PokemonsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private var downloading: Job? = null
-
-    private val lastQueries = mutableStateListOf("")
 
     init {
         viewModelScope.launch {
@@ -175,20 +172,10 @@ class PokemonsViewModel @Inject constructor(
             }
 
             is PokemonsEvent.OnSearch -> {
-                if (lastQueries[0] == "") {
-                    _uiState.update { pokemonsUiState ->
-                        pokemonsUiState.copy(
-                            lastQueries = listOf(event.searchQuery)
-                        )
-                    }
+                if (_uiState.value.lastQueries[0] == "") {
+                    _uiState.value.lastQueries[0] = event.searchQuery
                 } else {
-                    lastQueries.toMutableList().add(event.searchQuery)
-
-//                    update { pokemonsUiState ->
-//                        pokemonsUiState.copy(
-//                            lastQueries =
-//                        )
-//                    }
+                    _uiState.value.lastQueries.add(event.searchQuery)
                 }
             }
 

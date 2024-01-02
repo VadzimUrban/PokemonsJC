@@ -13,7 +13,7 @@ data class PokemonsUiState(
     val isDialogOpen: Boolean = false,
     val searchQuery: String = "",
     val isSearchBarActive: Boolean = false,
-    val lastQueries: List<String> = emptyList(),
+    val lastQueries: MutableList<String> = mutableListOf(""),
     val isShowingSearchBar: Boolean = false,
     val isShowingAppBarTitle: Boolean = true,
     val isShowingSearchIcon: Boolean = true,
