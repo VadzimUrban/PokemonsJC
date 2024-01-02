@@ -1,6 +1,7 @@
 package com.example.pokemonsjc.presentation.pokemonsScreen
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemonsjc.domain.interactors.PokemonsInteractor
@@ -24,6 +25,8 @@ class PokemonsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private var downloading: Job? = null
+
+    private val lastQueries = mutableStateListOf("")
 
     init {
         viewModelScope.launch {
@@ -67,7 +70,14 @@ class PokemonsViewModel @Inject constructor(
                     .collect {
                         _uiState.update { pokemonsUiState ->
                             pokemonsUiState.copy(
-                                pokemons = it, errorMessage = ""
+                                pokemons = it,
+                                errorMessage = "",
+                                isSearchBarActive = false,
+                                searchQuery = "",
+                                isShowingSearchBar = false,
+                                isShowingSearchIcon = true,
+                                isShowingAppBarTitle = true,
+                                isShowingCloseSearchingIcon = true,
                             )
                         }
                     }
@@ -84,7 +94,7 @@ class PokemonsViewModel @Inject constructor(
                         it.copy(
                             pokemons = emptyList(),
                             errorMessage = e.toString(),
-                            isScreenIsEmpty = false
+                            isScreenIsEmpty = false,
                         )
                     }
                     Log.e(DOWNLOAD_ERROR, e.toString())
@@ -99,7 +109,11 @@ class PokemonsViewModel @Inject constructor(
                         }
                     } else {
                         _uiState.update {
-                            it.copy(isScreenIsEmpty = false, errorMessage = "", pokemons = pokemons)
+                            it.copy(
+                                isScreenIsEmpty = false,
+                                errorMessage = "",
+                                pokemons = pokemons,
+                            )
                         }
                     }
                 }
@@ -121,9 +135,68 @@ class PokemonsViewModel @Inject constructor(
                 pokemonsInteractor.getPokemonsStream().toPresentationStream().collect {
                     _uiState.update { pokemonsUiState ->
                         pokemonsUiState.copy(
-                            pokemons = it
+                            pokemons = it,
+                            isShowingCloseSearchingIcon = false,
                         )
                     }
+                }
+            }
+
+            PokemonsEvent.OpenSearch -> {
+                _uiState.update { pokemonsUiState ->
+                    pokemonsUiState.copy(
+                        isShowingSearchBar = true,
+                        isShowingAppBarTitle = false,
+                        isShowingSearchIcon = false,
+                        isShowingCloseSearchingIcon = true,
+                    )
+                }
+            }
+
+            PokemonsEvent.CloseSearch -> {
+                _uiState.update { pokemonsUiState ->
+                    pokemonsUiState.copy(
+                        isSearchBarActive = false,
+                        isShowingSearchBar = false,
+                        isShowingAppBarTitle = true,
+                        isShowingSearchIcon = true,
+                        searchQuery = "",
+                        isShowingCloseSearchingIcon = false,
+                    )
+                }
+            }
+
+            is PokemonsEvent.OnQueryChange -> {
+                _uiState.update { pokemonsUiState ->
+                    pokemonsUiState.copy(
+                        searchQuery = event.searchQuery
+                    )
+                }
+            }
+
+            is PokemonsEvent.OnSearch -> {
+                if (lastQueries[0] == "") {
+                    _uiState.update { pokemonsUiState ->
+                        pokemonsUiState.copy(
+                            lastQueries = listOf(event.searchQuery)
+                        )
+                    }
+                } else {
+                    lastQueries.toMutableList().add(event.searchQuery)
+
+//                    update { pokemonsUiState ->
+//                        pokemonsUiState.copy(
+//                            lastQueries =
+//                        )
+//                    }
+                }
+            }
+
+            is PokemonsEvent.OnActiveChange -> {
+                _uiState.update { pokemonsUiState ->
+                    pokemonsUiState.copy(
+                        isSearchBarActive = event.isSearchBarActive
+                    )
                 }
             }
         }
