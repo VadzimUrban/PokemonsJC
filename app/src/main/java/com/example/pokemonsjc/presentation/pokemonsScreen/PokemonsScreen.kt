@@ -36,12 +36,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.pokemonsjc.R
 import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeleteAll
 import com.example.pokemonsjc.presentation.commonWidgets.DeletePokemonsFAB
 import com.example.pokemonsjc.presentation.commonWidgets.EmptyScreen
@@ -198,13 +196,11 @@ fun PokemonsScreen(
             Box(modifier = Modifier.align(Alignment.Center)) {
                 if (pokemonsUiState.isScreenIsEmpty) {
                     EmptyScreen(
-                        image = painterResource(id = R.drawable.refresh100),
                         title = "Screen is empty, swipe down to refresh",
                     )
                 }
                 if (pokemonsUiState.errorMessage != "") {
                     ErrorScreen(
-                        image = painterResource(id = R.drawable.no_connection100),
                         title = "Something went wrong,",
                         subtitle = "check your internet connection",
                         buttonTitle = "Continue offline",
