@@ -64,7 +64,7 @@ fun PokemonsSearchBar(
             }
         },
         shape = RoundedCornerShape(10.dp),
-        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.secondary),
         tonalElevation = 20.dp
     ) {
         lastQueries.forEach {

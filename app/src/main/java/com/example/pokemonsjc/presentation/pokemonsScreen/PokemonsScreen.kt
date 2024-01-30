@@ -67,7 +67,7 @@ fun PokemonsScreen(
         onRefresh = { viewModel.createEvent(PokemonsEvent.UpdatePokemons) })
 
     // tried to optimise lambda
-    val openPokemonDeatailScreen = remember<(id: Long) -> Unit> {
+    val openPokemonDetailScreen = remember<(id: Long) -> Unit> {
         {
             navController.navigate(route = Screens.PokemonDetail.passId(it))
         }
@@ -83,13 +83,17 @@ fun PokemonsScreen(
 
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 modifier = Modifier.height(70.dp),
+                elevation = 10.dp,
                 title = {
                     if (pokemonsUiState.isShowingAppBarTitle) {
                         Text(
-                            text = "Pokemons", style = MaterialTheme.typography.titleLarge
+                            text = "Pokemons",
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 },
@@ -100,7 +104,9 @@ fun PokemonsScreen(
                                 .padding(16.dp)
                                 .clickable {
                                     viewModel.createEvent(PokemonsEvent.OpenSearch)
-                                }, imageVector = Icons.Filled.Search, contentDescription = ""
+                                },
+                            imageVector = Icons.Filled.Search, contentDescription = "",
+                            tint = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 },
@@ -117,7 +123,7 @@ fun PokemonsScreen(
                         )
                     }
                 },
-                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                backgroundColor = MaterialTheme.colorScheme.primary,
             )
             if (pokemonsUiState.isShowingSearchBar) {
                 with(pokemonsUiState) {
@@ -175,7 +181,7 @@ fun PokemonsScreen(
                 items(pokemonsUiState.pokemons, key = { pokemon -> pokemon.id }) {
                     PokemonsItem(pokemon = it) {
                         // tried to optimise lambda
-                        openPokemonDeatailScreen(it.id)
+                        openPokemonDetailScreen(it.id)
 //                        navController.navigate(route = Screens.PokemonDetail.passId(it.id))
                         Log.i("after navigate", "navigate id = ${it.id}")
                     }
