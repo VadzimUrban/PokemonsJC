@@ -49,22 +49,33 @@ fun PokemonsSearchBar(
             onActiveChange(it)
         },
         placeholder = {
-            Text(text = "Search...")
+            Text(
+                text = "Search...", color = MaterialTheme.colorScheme.onSecondary
+            )
         },
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSecondary,
+            )
         },
         trailingIcon = {
             if (isSearchBarActive) {
                 Icon(
                     modifier = Modifier.clickable {
                         closeSearch()
-                    }, imageVector = Icons.Filled.Close, contentDescription = "Search"
+                    },
+                    imageVector = Icons.Filled.Close, contentDescription = "Search",
+                    tint = MaterialTheme.colorScheme.onSecondary,
                 )
             }
         },
         shape = RoundedCornerShape(10.dp),
-        colors = SearchBarDefaults.colors(containerColor = MaterialTheme.colorScheme.secondary),
+        colors = SearchBarDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.secondary,
+            dividerColor = MaterialTheme.colorScheme.onSecondary,
+        ),
         tonalElevation = 20.dp
     ) {
         lastQueries.forEach {

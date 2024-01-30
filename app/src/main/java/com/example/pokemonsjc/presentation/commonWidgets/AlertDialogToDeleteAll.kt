@@ -15,13 +15,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
@@ -34,52 +34,78 @@ fun AlertDialogToDeleteAll(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
+            .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f))
     ) {
-        Dialog(onDismissRequest = onDismissRequest) {
-            Card(
+        Card(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .height(300.dp)
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
+            backgroundColor = MaterialTheme.colorScheme.secondary
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth()
-                    .height(375.dp)
+                    .fillMaxSize()
                     .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                Box(
+                    modifier = Modifier.weight(3f)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Warning,
+                        imageVector = Icons.Filled.Info,
                         contentDescription = "",
                         modifier = Modifier
-                            .weight(3f)
-                            .size(90.dp)
+                            .align(Alignment.Center)
+                            .size(80.dp),
+                        tint = MaterialTheme.colorScheme.error
                     )
+                }
+                Box(modifier = Modifier.weight(2f)) {
                     Text(
-                        modifier = Modifier.weight(1f),
-                        text = "Are you sure ?",
-                        style = MaterialTheme.typography.titleMedium
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "All pokemons will stay in the server and can be re-downloaded if you need them again",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
+                }
+                Box(
+                    modifier = Modifier.weight(1f)
+                ) {
                     Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
+                            .align(Alignment.Center)
                             .fillMaxWidth()
-                            .weight(1f)
+
                     ) {
                         TextButton(
                             onClick = onDismissRequest, modifier = Modifier.weight(1f)
                         ) {
-                            Text(text = "Dismiss")
+                            Text(
+                                text = "Cancel",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                textAlign = TextAlign.Center,
+                            )
                         }
                         TextButton(
                             onClick = onConfirmation, modifier = Modifier.weight(1f)
                         ) {
-                            Text(text = "Confirm")
+                            Text(
+                                text = "Clear Cache",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
                         }
                     }
                 }
             }
         }
+        Dialog(onDismissRequest = onDismissRequest) {}
     }
 }

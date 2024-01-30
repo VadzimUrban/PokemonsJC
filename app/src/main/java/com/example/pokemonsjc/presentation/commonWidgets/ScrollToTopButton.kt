@@ -27,12 +27,12 @@ fun ScrollToTopButton(
                     coroutineScope.launch {
                         listState.scrollToItem(index = 0)
                     }
-                }, containerColor = MaterialTheme.colorScheme.primary
+                }, containerColor = MaterialTheme.colorScheme.onPrimary
             ) {
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowUp,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onTertiary
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
