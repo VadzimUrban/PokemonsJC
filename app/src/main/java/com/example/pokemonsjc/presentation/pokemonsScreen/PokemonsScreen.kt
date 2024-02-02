@@ -118,6 +118,7 @@ fun PokemonsScreen(
                                 .clickable {
                                     viewModel.createEvent(PokemonsEvent.ReturnPokemons)
                                 },
+                            tint = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 },

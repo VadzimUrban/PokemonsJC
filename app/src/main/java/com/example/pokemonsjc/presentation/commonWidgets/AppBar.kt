@@ -3,6 +3,7 @@ package com.example.pokemonsjc.presentation.commonWidgets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,10 +21,13 @@ fun AppBar(title: String, imageVector: ImageVector, iconClick: () -> Unit) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = { iconClick.invoke() }) {
+            IconButton(onClick = { iconClick.invoke() },
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
+                )) {
                 Icon(imageVector = imageVector, contentDescription = "")
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
     )
 }

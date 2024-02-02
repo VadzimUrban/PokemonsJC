@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -75,6 +76,9 @@ fun PokemonsSearchBar(
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.secondary,
             dividerColor = MaterialTheme.colorScheme.onSecondary,
+            inputFieldColors = TextFieldDefaults.colors(
+                cursorColor = MaterialTheme.colorScheme.onSecondary
+            )
         ),
         tonalElevation = 20.dp
     ) {

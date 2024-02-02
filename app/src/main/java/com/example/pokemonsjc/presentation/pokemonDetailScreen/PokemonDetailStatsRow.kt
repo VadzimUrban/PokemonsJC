@@ -16,20 +16,32 @@ fun PokemonDetailStatsRow(title: String, value: String) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 8.dp),
         shape = RoundedCornerShape(10.dp),
-        shadowElevation = 4.dp,
-        color = MaterialTheme.colorScheme.primaryContainer
+        shadowElevation = 1.dp,
+        color = MaterialTheme.colorScheme.secondary
     ) {
         Row(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Text(
-                text = title, style = MaterialTheme.typography.titleMedium
+                modifier = Modifier.weight(1f),
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSecondary,
             )
+
             Text(
-                text = value, modifier = Modifier.padding(start = 16.dp)
+                text = value,
+                modifier = Modifier
+                    .weight(4f)
+                    .padding(start = 16.dp),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSecondary,
             )
         }
+
     }
 }

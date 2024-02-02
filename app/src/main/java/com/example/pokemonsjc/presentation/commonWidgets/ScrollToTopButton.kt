@@ -32,7 +32,7 @@ fun ScrollToTopButton(
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowUp,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.onTertiary
                 )
             }
         }
