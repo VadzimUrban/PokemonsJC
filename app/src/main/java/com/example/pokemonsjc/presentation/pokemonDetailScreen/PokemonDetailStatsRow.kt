@@ -32,7 +32,6 @@ fun PokemonDetailStatsRow(title: String, value: String) {
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
             )
-
             Text(
                 text = value,
                 modifier = Modifier
