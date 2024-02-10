@@ -18,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.pokemonsjc.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,13 +53,13 @@ fun PokemonsSearchBar(
         },
         placeholder = {
             Text(
-                text = "Search...", color = MaterialTheme.colorScheme.onSecondary
+                text = stringResource(id = R.string.Search), color = MaterialTheme.colorScheme.onSecondary
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
-                contentDescription = "Search",
+                contentDescription = stringResource(id = R.string.CDSearch),
                 tint = MaterialTheme.colorScheme.onSecondary,
             )
         },
@@ -67,7 +69,7 @@ fun PokemonsSearchBar(
                     modifier = Modifier.clickable {
                         closeSearch()
                     },
-                    imageVector = Icons.Filled.Close, contentDescription = "Search",
+                    imageVector = Icons.Filled.Close, contentDescription = stringResource(id = R.string.CDClose),
                     tint = MaterialTheme.colorScheme.onSecondary,
                 )
             }
@@ -92,7 +94,7 @@ fun PokemonsSearchBar(
                 Icon(
                     modifier = Modifier.padding(end = 10.dp),
                     imageVector = Icons.Filled.Refresh,
-                    contentDescription = "Refresh"
+                    contentDescription = stringResource(id = R.string.CDSearchHistory)
                 )
                 Text(
                     text = it

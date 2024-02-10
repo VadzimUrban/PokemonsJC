@@ -75,7 +75,22 @@ class PokemonsViewModel @Inject constructor(
                                 isShowingSearchIcon = true,
                                 isShowingAppBarTitle = true,
                                 isShowingCloseSearchingIcon = true,
+                                isPokemonSearchIsEmpty = false,
                             )
+                        }
+                        if (it.isEmpty()) {
+                            _uiState.update { pokemonsUiState ->
+                                pokemonsUiState.copy(
+                                    errorMessage = "",
+                                    isSearchBarActive = false,
+                                    searchQuery = "",
+                                    isShowingSearchBar = false,
+                                    isShowingSearchIcon = true,
+                                    isShowingAppBarTitle = true,
+                                    isShowingCloseSearchingIcon = true,
+                                    isPokemonSearchIsEmpty = true,
+                                )
+                            }
                         }
                     }
             }
@@ -134,6 +149,7 @@ class PokemonsViewModel @Inject constructor(
                         pokemonsUiState.copy(
                             pokemons = it,
                             isShowingCloseSearchingIcon = false,
+                            isPokemonSearchIsEmpty = false,
                         )
                     }
                 }
@@ -146,6 +162,7 @@ class PokemonsViewModel @Inject constructor(
                         isShowingAppBarTitle = false,
                         isShowingSearchIcon = false,
                         isShowingCloseSearchingIcon = true,
+                        isPokemonSearchIsEmpty = false,
                     )
                 }
             }
@@ -159,6 +176,7 @@ class PokemonsViewModel @Inject constructor(
                         isShowingSearchIcon = true,
                         searchQuery = "",
                         isShowingCloseSearchingIcon = false,
+                        isPokemonSearchIsEmpty = false,
                     )
                 }
             }

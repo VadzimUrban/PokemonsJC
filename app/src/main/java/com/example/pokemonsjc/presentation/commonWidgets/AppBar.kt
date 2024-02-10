@@ -10,6 +10,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import com.example.pokemonsjc.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +27,7 @@ fun AppBar(title: String, imageVector: ImageVector, iconClick: () -> Unit) {
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
                 )) {
-                Icon(imageVector = imageVector, contentDescription = "")
+                Icon(imageVector = imageVector, contentDescription = stringResource(id = R.string.CDBack))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),

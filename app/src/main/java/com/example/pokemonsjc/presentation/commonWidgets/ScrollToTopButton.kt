@@ -11,6 +11,8 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.pokemonsjc.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -31,7 +33,7 @@ fun ScrollToTopButton(
             ) {
                 Icon(
                     imageVector = Icons.Filled.KeyboardArrowUp,
-                    contentDescription = null,
+                    contentDescription = stringResource(id = R.string.CDButtonToTop),
                     tint = MaterialTheme.colorScheme.onTertiary
                 )
             }

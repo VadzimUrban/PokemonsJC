@@ -21,9 +21,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.pokemonsjc.R
 
 
 @Composable
@@ -57,7 +59,7 @@ fun AlertDialogToDeleteAll(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Info,
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.CDInfo),
                         modifier = Modifier
                             .align(Alignment.Center)
                             .size(80.dp),
@@ -67,7 +69,7 @@ fun AlertDialogToDeleteAll(
                 Box(modifier = Modifier.weight(2f)) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = "All pokemons will stay in the server and can be re-downloaded if you need them again",
+                        text = stringResource(id = R.string.InfoMessage),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSecondary
                     )
@@ -87,7 +89,7 @@ fun AlertDialogToDeleteAll(
                             onClick = onDismissRequest, modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Cancel",
+                                text = stringResource(id = R.string.Cancel),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onSecondary,
                                 textAlign = TextAlign.Center,
@@ -97,7 +99,7 @@ fun AlertDialogToDeleteAll(
                             onClick = onConfirmation, modifier = Modifier.weight(1f)
                         ) {
                             Text(
-                                text = "Clear Cache",
+                                text = stringResource(id = R.string.ClearCache),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.tertiary
                             )

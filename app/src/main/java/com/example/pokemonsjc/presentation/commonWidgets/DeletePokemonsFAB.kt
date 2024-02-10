@@ -6,6 +6,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.pokemonsjc.R
 
 @Composable
 fun DeletePokemonsFAB(onClick: () -> Unit) {
@@ -14,7 +16,7 @@ fun DeletePokemonsFAB(onClick: () -> Unit) {
     ) {
         Icon(
             imageVector = Icons.Filled.Delete,
-            contentDescription = "Delete all Pokemons",
+            contentDescription = stringResource(id = R.string.CDDeleteAllPokemons),
             tint = MaterialTheme.colorScheme.onTertiary
         )
     }

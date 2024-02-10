@@ -209,6 +209,10 @@ fun PokemonsScreen(
                         viewModel.createEvent(PokemonsEvent.ContinueOffline)
                     }
                 }
+                //EmptySearchScreen
+                if(pokemonsUiState.isPokemonSearchIsEmpty) {
+                    EmptyPokemonSearchScreen()
+                }
             }
 
             //AlertDialog

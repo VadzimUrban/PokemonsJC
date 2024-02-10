@@ -18,4 +18,5 @@ data class PokemonsUiState(
     val isShowingAppBarTitle: Boolean = true,
     val isShowingSearchIcon: Boolean = true,
     val isShowingCloseSearchingIcon: Boolean = false,
+    val isPokemonSearchIsEmpty: Boolean = false,
 )

@@ -1,3 +1,53 @@
 <resources>
     <string name="app_name">PokemonsJC</string>
+
+    <!-- AlertDialogToDeleteAll -->
+    <string name="InfoMessage">All pokemons will stay in the server and can be re-downloaded if you need them again</string>
+    <string name="Cancel">Cancel</string>
+    <string name="ClearCache">Clear Cache</string>
+    <!-- Content Descriptions -->
+    <string name="CDInfo">Info</string>
+
+    <!-- AppBar -->
+    <!-- Content Descriptions -->
+    <string name="CDBack">Back</string>
+
+    <!-- DeletePokemonsFAB -->
+    <!-- Content Descriptions -->
+    <string name="CDDeleteAllPokemons">Delete all Pokemons</string>
+
+    <!-- EmptyScreen -->
+    <!-- Content Descriptions -->
+    <string name="CDRefresh">Refresh</string>
+
+    <!-- ErrorScreen -->
+    <!-- Content Descriptions -->
+    <string name="CDError">Error</string>
+
+    <!-- PokemonsSearchBar -->
+    <string name="Search">Search...</string>
+    <!-- Content Descriptions -->
+    <string name="CDSearch">Search</string>
+    <string name="CDClose">Close</string>
+    <string name="CDSearchHistory">Search history</string>
+
+    <!-- ScrollToTopButton -->
+    <!-- Content Descriptions -->
+    <string name="CDButtonToTop">Button to top</string>
+
+    <!-- PokemonDetailContent -->
+    <!-- Content Descriptions -->
+    <string name="CDButtonToTop">Button to top</string>
+
+    <!-- EmptyPokemonSearchScreen -->
+    <!-- Content Descriptions -->
+    <string name="CDButtonToTop">Button to top</string>
+
+    <!-- PokemonsItem -->
+    <!-- Content Descriptions -->
+    <string name="CDButtonToTop">Button to top</string>
+
+    <!-- PokemonsScreen -->
+    <!-- Content Descriptions -->
+    <string name="CDButtonToTop">Button to top</string>
 </resources>
