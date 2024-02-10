@@ -18,9 +18,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.pokemonsjc.R
 import com.example.pokemonsjc.presentation.models.PokemonPresentation
 import com.example.pokemonsjc.ui.theme.PokemonsJCTheme
 
@@ -42,12 +44,12 @@ fun PokemonsItem(pokemon: PokemonPresentation, openPokemonDetailScreen: () -> Un
             if (pokemon.photo == null) {
                 Icon(
                     imageVector = Icons.Filled.Person, modifier = Modifier.size(80.dp),
-                    contentDescription = "", tint = MaterialTheme.colorScheme.onPrimary
+                    contentDescription = stringResource(id = R.string.CDPokemonsItemDefaultPhoto), tint = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
                 AsyncImage(
                     model = pokemon.photo,
-                    contentDescription = "Pokemon Photo",
+                    contentDescription = stringResource(id = R.string.CDPokemonsItemPhoto),
                     modifier = Modifier.size(80.dp)
                 )
             }

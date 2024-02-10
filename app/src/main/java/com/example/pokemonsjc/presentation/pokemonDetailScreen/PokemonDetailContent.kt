@@ -22,8 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.pokemonsjc.R
 import com.example.pokemonsjc.presentation.commonWidgets.AppBar
 import com.example.pokemonsjc.presentation.models.PokemonPresentationDetail
 
@@ -38,7 +40,7 @@ fun PokemonDetailContent(
     Scaffold(containerColor = MaterialTheme.colorScheme.background,
         topBar = {
         AppBar(
-            title = "", imageVector = Icons.Filled.ArrowBack, iconClick = returnToPokemons
+            title = stringResource(id = R.string.DetailTitle), imageVector = Icons.Filled.ArrowBack, iconClick = returnToPokemons
         )
     }) { innerPadding ->
         Surface() {
@@ -73,7 +75,7 @@ fun PokemonDetailContent(
                             Icon(
                                 imageVector = Icons.Filled.Person,
                                 modifier = Modifier.size(300.dp),
-                                contentDescription = "",
+                                contentDescription = stringResource(id = R.string.CDDetailDefaultPhoto),
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
                         } else {
@@ -82,7 +84,7 @@ fun PokemonDetailContent(
                                     .size(300.dp)
                                     .align(Alignment.CenterHorizontally),
                                 model = pokemon.photo,
-                                contentDescription = "PokemonPhoto"
+                                contentDescription = stringResource(id = R.string.CDDetailPhoto)
                             )
                         }
                         Text(

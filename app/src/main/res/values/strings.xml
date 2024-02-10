@@ -17,10 +17,14 @@
     <string name="CDDeleteAllPokemons">Delete all Pokemons</string>
 
     <!-- EmptyScreen -->
+    <string name="EmptyScreenTitle">Screen is empty, swipe down to refresh</string>
     <!-- Content Descriptions -->
     <string name="CDRefresh">Refresh</string>
 
     <!-- ErrorScreen -->
+    <string name="ErrorScreenTitle">Something went wrong,</string>
+    <string name="ErrorScreenSubtitleTitle">check your internet connection</string>
+    <string name="ErrorScreenButtonTitle">Continue offline</string>
     <!-- Content Descriptions -->
     <string name="CDError">Error</string>
 
@@ -36,18 +40,28 @@
     <string name="CDButtonToTop">Button to top</string>
 
     <!-- PokemonDetailContent -->
+    <string name="DetailTitle">Detail title</string>
+    <string name="DetailType">Type</string>
+    <string name="DetailHeight">Height</string>
+    <string name="DetailWeight">Weight</string>
     <!-- Content Descriptions -->
-    <string name="CDButtonToTop">Button to top</string>
+    <string name="CDDetailDefaultPhoto">Default photo</string>
+    <string name="CDDetailPhoto">Photo</string>
 
     <!-- EmptyPokemonSearchScreen -->
+    <string name="NoResults">No results</string>
     <!-- Content Descriptions -->
-    <string name="CDButtonToTop">Button to top</string>
+    <string name="CDNoResultsIcon">No results icon</string>
+
 
     <!-- PokemonsItem -->
     <!-- Content Descriptions -->
-    <string name="CDButtonToTop">Button to top</string>
+    <string name="CDPokemonsItemDefaultPhoto">Default photo</string>
+    <string name="CDPokemonsItemPhoto">Photo</string>
 
     <!-- PokemonsScreen -->
+    <string name="PokemonsScreenTitle">Pokemons</string>
     <!-- Content Descriptions -->
-    <string name="CDButtonToTop">Button to top</string>
+    <string name="CDPokemonsScreenSearch">Search</string>
+    <string name="CDPokemonsScreenBack">Back</string>
 </resources>

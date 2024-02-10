@@ -12,7 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.pokemonsjc.R
 
 @Composable
 fun EmptyPokemonSearchScreen() {
@@ -22,7 +24,7 @@ fun EmptyPokemonSearchScreen() {
     ) {
         Icon(
             imageVector = Icons.Filled.Info,
-            contentDescription = "",
+            contentDescription = stringResource(id = R.string.CDNoResultsIcon),
             modifier = Modifier.size(100.dp),
             tint = MaterialTheme.colorScheme.onPrimary,
         )
@@ -30,7 +32,7 @@ fun EmptyPokemonSearchScreen() {
             modifier = Modifier.size(34.dp)
         )
         Text(
-            text = "No results",
+            text = stringResource(id = R.string.NoResults),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleMedium,
         )

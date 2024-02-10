@@ -36,10 +36,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.pokemonsjc.R
 import com.example.pokemonsjc.presentation.commonWidgets.AlertDialogToDeleteAll
 import com.example.pokemonsjc.presentation.commonWidgets.DeletePokemonsFAB
 import com.example.pokemonsjc.presentation.commonWidgets.EmptyScreen
@@ -89,7 +91,7 @@ fun PokemonsScreen(
                 title = {
                     if (pokemonsUiState.isShowingAppBarTitle) {
                         Text(
-                            text = "Pokemons",
+                            text = stringResource(id = R.string.PokemonsScreenTitle),
                             style = MaterialTheme.typography.headlineSmall,
                             color = MaterialTheme.colorScheme.onPrimary,
                         )
@@ -103,7 +105,8 @@ fun PokemonsScreen(
                                 .clickable {
                                     viewModel.createEvent(PokemonsEvent.OpenSearch)
                                 },
-                            imageVector = Icons.Filled.Search, contentDescription = "",
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = stringResource(id = R.string.CDPokemonsScreenSearch),
                             tint = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
@@ -112,7 +115,7 @@ fun PokemonsScreen(
                     if (pokemonsUiState.isShowingCloseSearchingIcon) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.CDPokemonsScreenBack),
                             modifier = Modifier
                                 .padding(10.dp)
                                 .clickable {
@@ -197,20 +200,20 @@ fun PokemonsScreen(
             Box(modifier = Modifier.align(Alignment.Center)) {
                 if (pokemonsUiState.isScreenIsEmpty) {
                     EmptyScreen(
-                        title = "Screen is empty, swipe down to refresh",
+                        title = stringResource(id = R.string.EmptyScreenTitle),
                     )
                 }
                 if (pokemonsUiState.errorMessage != "") {
                     ErrorScreen(
-                        title = "Something went wrong,",
-                        subtitle = "check your internet connection",
-                        buttonTitle = "Continue offline",
+                        title = stringResource(id = R.string.ErrorScreenTitle),
+                        subtitle = stringResource(id = R.string.ErrorScreenSubtitleTitle),
+                        buttonTitle = stringResource(id = R.string.ErrorScreenButtonTitle),
                     ) {
                         viewModel.createEvent(PokemonsEvent.ContinueOffline)
                     }
                 }
                 //EmptySearchScreen
-                if(pokemonsUiState.isPokemonSearchIsEmpty) {
+                if (pokemonsUiState.isPokemonSearchIsEmpty) {
                     EmptyPokemonSearchScreen()
                 }
             }
