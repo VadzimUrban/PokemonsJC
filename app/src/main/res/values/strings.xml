@@ -5,6 +5,7 @@
     <string name="InfoMessage">All pokemons will stay in the server and can be re-downloaded if you need them again</string>
     <string name="Cancel">Cancel</string>
     <string name="ClearCache">Clear Cache</string>
+
     <!-- Content Descriptions -->
     <string name="CDInfo">Info</string>
 
